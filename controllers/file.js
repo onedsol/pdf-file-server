@@ -1,69 +1,47 @@
-// import mongoose from 'mongoose';
-// import response from '../helpers/response';
-// import request from '../helpers/request';
-// import pagination from '../helpers/pagination';
+import config from '../config/config.js'
+import multer from 'multer';
+import fs from 'fs';
 
-// const User = mongoose.model('User');
-
-exports.get = function(req, res) {
-  // User.findById(req.params.id, function(err, user) {
-  //   if (err) return response.sendNotFound(res);
-  //   if (!req.currentUser.canRead(user)) return response.sendForbidden(res);
-  //   res.json(user);
-  // });
-  const file = { name: 'Name', file: 'File'}
-  res.json(file);
+const load = function (req, res) {
+  const file = req.query.file;
+  const fileName = req.query.fileName;
+  const fullPath = `${config.files.basePath}/${file}`
+  console.log(fullPath)
+  const fileExists = fs.existsSync(fullPath);
+  console.log(fileExists)
+  if (file && fileExists) {
+    console.log(req.query);
+    res.sendFile(fullPath);
+  } else {
+    throw new Error('File not found in this server');
+  }
 };
 
-// exports.list = function(req, res) {
-//   if (req.currentUser.role != 'admin') return response.sendForbidden(res);
-//   User.paginate(request.getFilteringOptions(req, ['email', 'role']), request.getRequestOptions(req), function(err, result) {
-//     if (err) return res.send(err);
-//     pagination.setPaginationHeaders(res, result);
-//     res.json(result.docs);
-//   });
-// };
-//
-// exports.read = function(req, res) {
-//   User.findById(req.params.id, function(err, user) {
-//     if (err) return response.sendNotFound(res);
-//     if (!req.currentUser.canRead(user)) return response.sendForbidden(res);
-//     res.json(user);
-//   });
-// };
-//
-// exports.create = function(req, res) {
-//   const newUser = new User(req.body);
-//   newUser.role = 'user';
-//   newUser.save(function(err, user) {
-//     if (err) return response.sendBadRequest(res, err);
-//     response.sendCreated(res, user);
-//   });
-// };
-//
-// exports.update = function(req, res) {
-//   const user = req.body;
-//   delete user.role;
-//   if (!req.currentUser.canEdit({ _id: req.params.id })) return response.sendForbidden(res);
-//   User.findOneAndUpdate({ _id: req.params.id }, user, { new: true, runValidators: true }, function(err, user) {
-//     if (err) return response.sendBadRequest(res, err);
-//     res.json(user);
-//   });
-// };
-//
-// exports.delete = function(req, res) {
-//   User.remove({ _id: req.params.id }, function(err, user) {
-//     if (err) return res.send(err);
-//     if (!req.currentUser.canEdit(user)) return response.sendForbidden(res);
-//     res.json({ message: 'User successfully deleted' });
-//   });
-// };
-//
-// exports.loadUser = function (req, res, next) {
-//   User.findById(req.params.userId, function (err, user) {
-//     if (err) return response.sendNotFound(res);
-//     if (!req.locals) req.locals = {};
-//     req.locals.user = user;
-//     next();
-//   });
-// };
+const update = function (req, res, next) {
+  console.log(req.query);
+  console.log(req.body);
+  console.log(req.file);
+  res.send('Success, file saved');
+};
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const filePath = req.query.filePath;
+    cb(null, config.files.basePath + filePath)
+  },
+  filename: function (req, file, cb) {
+    const fileName = req.query.fileName;
+    cb(null, fileName)
+  }
+})
+const upload = multer({storage: storage})
+const pdfFile = upload.single('file');
+
+
+const file = {
+  pdfFile,
+  update,
+  load
+}
+
+export default file

@@ -1,12 +1,14 @@
 const searchParams = new URLSearchParams(window.location.search);
-console.log(searchParams.get('filePath')); // true
+console.log(searchParams.get('file')); // true
 console.log(searchParams.get('fileName')); // true
 console.log(searchParams.get('title')); // true
+
+const url = `http://${host}:${port}/file?file=${searchParams.get('file')}`
 
 /* Control the viewer customization.
  * It lists down all supported variables with default values.
  **/
-var viewerConfig = {
+const viewerConfig = {
   showAnnotationTools: true,
   enableFormFilling: true,
   showDownloadPDF: true,
@@ -24,9 +26,9 @@ const saveOptions = {
 }
 
 document.addEventListener('adobe_dc_view_sdk.ready', function () {
-  var adobeDCView = new AdobeDC.View({clientId: '15ae19ceef39492c8ec48974d51351dc', divId: 'adobe-dc-view'});
+  var adobeDCView = new AdobeDC.View({clientId: clientId, divId: 'adobe-dc-view'});
   adobeDCView.previewFile({
-    content: {location: {url: 'http://localhost:3000/get?filePath=' + searchParams.get('filePath') + '/' + searchParams.get('fileName')}},
+    content: {location: {url: url}},
     metaData: {fileName: searchParams.get('title')}
   });
 
@@ -41,7 +43,7 @@ document.addEventListener('adobe_dc_view_sdk.ready', function () {
       const blob = new Blob([uint8Array], {type: 'application/pdf'});
       const formData = new FormData();
       const pdfFilename = searchParams.get('title');
-      formData.append('pdfFile', blob, pdfFilename);
+      formData.append('file', blob, pdfFilename);
 
       await fetch('http://localhost:3000/save?filePath=' + searchParams.get('filePath') + '&fileName=' + searchParams.get('fileName'), {
         method: 'POST',

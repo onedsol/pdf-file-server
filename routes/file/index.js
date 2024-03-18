@@ -1,13 +1,11 @@
 import express from 'express';
 
-import file from '../../controllers/file';
-import auth from '../../controllers/auth';
-// import items from './items';
+import file from '../../controllers/file.js';
+import auth from '../../controllers/auth.js';
 
 const routes  = express.Router();
 
 // routes.use('/:userId/items', users.loadUser, items);
-
 // routes.route('/:id')
 //   .all(auth.verifyToken)
 //   .get(users.read)
@@ -15,7 +13,7 @@ const routes  = express.Router();
 //   .delete(users.delete);
 
 routes.route('/')
-  .get(auth.verifyToken, users.list)
-  // .post(users.create);
+  .get(auth.verifyToken, file.load)
+  .post(file.pdfFile, file.update);
 
-module.exports = routes;
+export default routes;
