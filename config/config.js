@@ -1,7 +1,8 @@
 const host = 'localhost';
 const hostDB = 'localhost';
 const port = 3000;
-const basePath = '/home/hermeslm/dev/sources/pdf-file-server/public';
+// const basePath = '/home/hermeslm/dev/sources/pdf-file-server/public';
+const basePath = '/Users/hermeslm/dev/sources/pdf-file-server/public';
 
 
 const config = {
