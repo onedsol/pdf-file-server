@@ -1,6 +1,6 @@
-const Service = require('node-windows').Service;
+import nw from 'node-windows';
 
-const svc = new Service({
+const svc = new nw.Service({
   name: 'PDF Files Server',
   description: 'Simple PDF Files Server Hosting',
   script: 'C:\\path\\to\\your\\app\\app.js'
