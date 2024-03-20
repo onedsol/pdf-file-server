@@ -17,7 +17,13 @@ Replace DOC_DIR var in the .env file with your desired path
 
 ### To run ###
 
-npm start
+`npm start`
+
+### To Install as a Windows Service ###
+
+`node windows-service.js install`
+
+`node windows-service.js uninstall`
 
 ### Params ###
 
