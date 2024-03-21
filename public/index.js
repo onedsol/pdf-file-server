@@ -1,9 +1,12 @@
 const searchParams = new URLSearchParams(window.location.search);
 console.log(searchParams.get('file')); // true
 console.log(searchParams.get('title')); // true
+console.log(searchParams.get('readOnly'));
 
-const readOnly = searchParams.get('readOnly') || false // Set as read only by params
+const readOnly = searchParams.get('readOnly') && searchParams.get('readOnly').toLowerCase() === "true" ? true : false // Set as read only by params
 const baseUrl = `http://${host}:${port}`
+
+//console.log(readOnly)
 
 /* Control the viewer customization.
  * It lists down all supported variables with default values.
