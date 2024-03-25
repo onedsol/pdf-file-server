@@ -1,6 +1,7 @@
 const host = 'localhost';
 const hostDB = 'localhost';
 const port = 3000;
+const sslPort = 443;
 // const basePath = '/home/hermeslm/dev/sources/pdf-file-server/public'; // Path for Linux
 const basePath = '/Users/hermeslm/dev/sources/pdf-file-server/public'; // Path for Mac
 // const basePath = 'c:/dev/access/sunshine/docs';  // Path for Windows
@@ -9,7 +10,8 @@ const basePath = '/Users/hermeslm/dev/sources/pdf-file-server/public'; // Path f
 const config = {
   server: {
     host: host,
-    port: port
+    port: port,
+    sslPort: sslPort
   },
   files: {
     basePath: basePath

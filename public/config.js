@@ -1,5 +1,6 @@
 const host = 'localhost';
 const port = 3000;
+const baseUrl = `http://${host}:${port}`;
 const clientId = '15ae19ceef39492c8ec48974d51351dc';
 
 const showAnnotationTools = false
