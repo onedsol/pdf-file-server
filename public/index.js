@@ -4,7 +4,7 @@ console.log(searchParams.get('title')); // true
 console.log(searchParams.get('readOnly'));
 
 const readOnly = searchParams.get('readOnly') && searchParams.get('readOnly').toLowerCase() === "true" ? true : false // Set as read only by params
-const baseUrl = `http://${host}:${port}`
+// const baseUrl = `http://${host}:${port}`
 
 //console.log(readOnly)
 
