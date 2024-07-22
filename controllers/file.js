@@ -21,7 +21,7 @@ const load = function (req, res) {
 const update = function (req, res, next) {
   log.Info(`POST Request update file: ${req.file}`)
   log.Info(`POST Request query params: ${JSON.stringify(req.query)}`);
-  log.Info(`POST Request body: ${req.body}`);
+  log.Info(`POST Request body: ${JSON.stringify(req.body)}`);
   res.send('Success, file saved');
 };
 
